@@ -1,0 +1,24 @@
+%h2 Show page for movie
+= flash.now[:notice] unless flash.now[:notice].blank?
+%br/ 
+Title: #{@movie.title}
+%br/ 
+Description: #{@movie.description}
+%br/ 
+Cast: #{@movie.cast}
+%br/ 
+Language: #{@movie.language}
+%br/ 
+%br/
+%strong Comments:
+%br/
+- unless @movie.comments.empty?
+	- @movie.comments.each do |comment|
+		= comment.desc
+		= link_to "edit", edit_movie_comment_path(@movie,comment)
+		= link_to "delete", movie_comment_path(@movie,comment), data: { :confirm => 'Are you sure?'}, :method => :delete
+		%br/
+= link_to "Create a new comment", new_movie_comment_path(@movie.id)
+%br/ 
+%h3	
+	= link_to "Back to all movies", root_path

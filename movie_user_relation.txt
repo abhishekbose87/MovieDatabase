@@ -1,0 +1,20 @@
+physician has many patients through appointments
+
+Appointment belongs to physician and patient 
+
+Patient has many physicians through appointments
+
+
+Movie has many users through comments
+
+Comments belong to both user and movies
+
+User has many movies through comments 
+
+----------------------------------------
+
+Movie has many comments through user
+Comments belong to both user and movies 
+User has many comments through movie
+
+

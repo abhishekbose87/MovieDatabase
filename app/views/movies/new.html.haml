@@ -1,0 +1,9 @@
+%h2 Create a new movie in the database
+= flash.now[:notice] unless flash.now[:notice].blank?
+= form_for @movie do |f|
+  Title: #{f.text_field :title}
+  Description: #{f.text_area :description}
+  Cast: #{f.text_area :cast}
+  Language: #{f.text_field :language}
+  %h2
+    = f.submit "Create movie"

@@ -1,0 +1,19 @@
+%h2 Sign up
+= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = f.error_notification
+  .form-inputs
+    Email
+    = f.email_field :email, :required => true, :autofocus => true
+    %br/  
+    Password 
+    = f.password_field :password, :required => true
+    %br/  
+    Password Confirmation
+    = f.password_field :password_confirmation, :required => true
+    %br/  
+    Name
+    = f.text_field :name
+    %br/   
+  .form-actions
+    = f.button :submit, "Sign up"
+= render "devise/shared/links"

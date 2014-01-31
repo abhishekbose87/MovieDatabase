@@ -1,0 +1,5 @@
+%h2 Edit comment
+= form_for ([@movie, @comment]) do |c|
+  Comment: #{c.text_area :desc}
+  %br/
+  = c.submit
