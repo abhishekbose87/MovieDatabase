@@ -5,6 +5,9 @@ MovieDatabase::Application.routes.draw do
   end
   
   root 'movies#index'
+
+  patch 'movies/:id/upvote' => 'movies#upvote', as: :upvote
+  patch 'movies/:id/downvote' => 'movies#downvote', as: :downvote
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

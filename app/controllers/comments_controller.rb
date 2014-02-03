@@ -1,26 +1,20 @@
 class CommentsController < ApplicationController
 
+	before_filter :authenticate_user!, :load_movie
+
 	def new
-		# puts "Inside new action of comments"
-		# p params["id"]
-		@movie = Movie.find(params["movie_id"])
-		# puts "Movie = "
-		# p @movie
 		@comment = Comment.new
 	end
 
 	def index
-		@movie = Movie.find(params["movie_id"])
 		@comments = @movie.comments
 	end
 
 	def edit
-		@movie = Movie.find(params["movie_id"])
 		@comment = @movie.comments.find(params["id"])
 	end
 
 	def destroy
-		@movie = Movie.find(params["movie_id"])
 		@comment = @movie.comments.find(params["id"])
 
 		if @comment.destroy
@@ -32,7 +26,6 @@ class CommentsController < ApplicationController
 	end
 
 	def update
-		@movie = Movie.find(params["movie_id"])
 		@comment = @movie.comments.find(params["id"])
 		# @comment = Comment.new(desc: params["comment"]["desc"], movie: @movie)
 		# @comment = Comment.new(comment_params)
@@ -53,9 +46,7 @@ class CommentsController < ApplicationController
 		puts "############################"
 		puts "In create action"
 		p params
-		@movie = Movie.find(params["movie_id"])
-		user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password")
-		@comment = Comment.new(desc: params["comment"]["desc"], movie: @movie, user: user)
+		@comment = Comment.new(desc: params["comment"]["desc"], movie: @movie, user: current_user)
 		# @comment = Comment.new(comment_params)
 		
 		if @comment.save
@@ -70,5 +61,9 @@ class CommentsController < ApplicationController
 	private
 		def comment_params
 			params.require(:comment).permit(:desc)
+		end
+
+		def load_movie
+			@movie = Movie.find(params["movie_id"])
 		end
 end

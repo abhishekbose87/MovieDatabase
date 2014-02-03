@@ -9,14 +9,16 @@
     #container
       #user_nav
         - if user_signed_in?
-          Logged in as %strong #{current_user.email}.
-          = link_to 'Edit profile', edit_user_registration_path
+          Logged in as 
+          %strong #{current_user.email}
+          = link_to "Edit profile", edit_user_registration_path
           = link_to "Logout", destroy_user_session_path, method: :delete
         - else
           = link_to "Sign up", new_user_registration_path
           = link_to "Login", new_user_session_path
-      %h2 Notices are :
-      = flash.now[:notice]
-      %h2 Alerts are :
-      = flash.now[:alert] 
+      %br/
+      - unless flash[:notice].blank?
+        = flash[:notice]
+        - flash[:notice] = nil
+      %br/
       = yield

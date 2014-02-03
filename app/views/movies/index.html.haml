@@ -1,10 +1,10 @@
 #content
   - @movies.each do |movie|
     .movie
-      %strong= "#{movie.title} "
+      %strong= link_to "#{movie.title} ", movie
       = " upvotes: #{movie.upvotes} downvotes: #{movie.downvotes}"
-      = link_to "Show", movie
-      = link_to "Edit", edit_movie_path(movie)
-      = link_to "Delete", movie, data: { :confirm => 'Are you sure?'}, :method => :delete
-  %h2
-    = link_to "Create a new movie", new_movie_path
+      - if current_user.try(:admin?)
+        = link_to "Edit", edit_movie_path(movie)
+        = link_to "Delete", movie, data: { :confirm => 'Are you sure?'}, :method => :delete
+        %h2
+          = link_to "Create a new movie", new_movie_path

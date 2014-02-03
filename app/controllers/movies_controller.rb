@@ -49,6 +49,20 @@ class MoviesController < ApplicationController
 		 @movie = Movie.find(params["id"])
 	end 
 
+	def upvote
+		@movie = Movie.find(params["id"])
+		@vote = Vote.new(value: "up",movie: @movie, user: current_user)
+		@vote.save!
+		redirect_to @movie, notice: "Your upvote has been registered"
+	end
+
+	def downvote
+		@movie = Movie.find(params["id"])
+		@vote = Vote.new(value: "down",movie: @movie, user: current_user)
+		@vote.save!
+		redirect_to @movie, notice: "Your downvote has been registered"
+	end
+
 	private
 		def movie_params
 			params.require(:movie).permit(:title, :description, :cast, :language )
