@@ -1,5 +1,7 @@
 class MoviesController < ApplicationController
 
+	before_action :check_admin_login, except: [:index, :show]
+
 	def index
 		@movies = Movie.all
 	end
@@ -7,6 +9,16 @@ class MoviesController < ApplicationController
 	def show 
 		# puts "I am in the show method"
 		@movie = Movie.find(params[:id])
+		@comments = @movie.comments
+		upvotes = @movie.votes.where(value:"up")
+		@usernames = []
+		upvotes.each do |v|
+    	@usernames << v.user.name
+    end
+
+    @votes_from_current_user = Vote.where(movie_id: @movie, user_id: current_user)
+    p @votes_from_current_user.count
+    p @votes_from_current_user
 	end
 
 	def new
@@ -14,14 +26,14 @@ class MoviesController < ApplicationController
 	end
 
 	def create
-		puts "##################Params = "
-		p params
+		# puts "##################Params = "
+		# p params
 	  @movie = Movie.new(movie_params)
 		if @movie.save
 		  redirect_to @movie, notice: 'Movie was successfully created.'
 		else 
-			p "----------------------------"
-			p @movie.errors.full_messages
+			# p "----------------------------"
+			# p @movie.errors.full_messages
 		  redirect_to new_movie_path, notice: "Errors are #{@movie.errors.full_messages} "
 	  end
 	end
@@ -67,5 +79,10 @@ class MoviesController < ApplicationController
 		def movie_params
 			params.require(:movie).permit(:title, :description, :cast, :language )
 		end 
+
+		def check_admin_login
+			redirect_to new_user_session_path, notice: "You have been redirected because you have no access" unless current_user
+			redirect_to movies_path, notice: "You have been redirected because you have no access" unless current_user.try(:admin?)				
+		end
 
 end

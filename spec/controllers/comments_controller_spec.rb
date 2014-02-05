@@ -6,6 +6,7 @@ before do
 	c = Category.create(desc: "Horror")
 	@movie = Movie.create(title:"Dhoom2", description:"asdasd", cast: "asdasd", language:"asdasd", category_ids: c.id)
 	@user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password")	
+	sign_in @user
 end
 
 render_views

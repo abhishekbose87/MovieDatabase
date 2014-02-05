@@ -37,13 +37,13 @@ describe User do
   	# 	expect(@user.valid?).to be_false
   	# end
 
-    it { should validate_presence_of(:username) }
+    # it { should validate_presence_of(:username) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:password) }
     it { should validate_presence_of(:email) }
 
     it { should validate_uniqueness_of(:email) }
-    it { should validate_uniqueness_of(:username)}
+    # it { should validate_uniqueness_of(:username)}
 
   end
 

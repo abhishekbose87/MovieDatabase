@@ -17,8 +17,12 @@
           = link_to "Sign up", new_user_registration_path
           = link_to "Login", new_user_session_path
       %br/
+      Flash messages start
+      %br/
       - unless flash[:notice].blank?
         = flash[:notice]
         - flash[:notice] = nil
+      %br/
+      Flash messages end
       %br/
       = yield

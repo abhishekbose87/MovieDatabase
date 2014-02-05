@@ -20,6 +20,8 @@ describe MoviesController do
 
 	describe "#new" do
 		it "renders the new template" do
+			user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password",admin: true)	
+			sign_in user
 			get :new
 			expect(response).to render_template("new")
 		end
@@ -31,12 +33,19 @@ describe MoviesController do
 		it "renders the edit template" do
 			c = Category.create(desc: "Horror")
 			m = Movie.create(title:"Dhoom2", description:"asdasd", cast: "asdasd", language:"asdasd", category_ids: c.id)
+			user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password",admin: true)	
+			sign_in user
 			get :edit, id: 1
 			expect(response).to render_template("edit")
 		end
 	end
 
 	describe "#create" do
+
+		before do
+			user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password",admin: true)	
+			sign_in user
+		end
 
 		context "with valid data" do
 
@@ -46,7 +55,7 @@ describe MoviesController do
 				@movie_attributes = @movie.attributes.keep_if { 
 					|key,value| ["title","description","cast","language"].include? key.to_s
 					}
-					puts @movie_attributes
+				# puts @movie_attributes
 			end
 
 			it "creates a movie object" do
@@ -84,6 +93,8 @@ describe MoviesController do
 		before do
 			c = Category.create(desc: "Horror")
 			@movie = Movie.create(title:"Dhoom2", description:"asdasd", cast: "asdasd", language:"asdasd", category_ids: c.id)				
+			@user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password")	
+			sign_in @user
 		end
 
 		it "shows a movie object for particular id" do
@@ -103,6 +114,8 @@ describe MoviesController do
 		before do
 			c = Category.create(desc: "Horror")
 			@movie = Movie.create(title:"Dhoom2", description:"asdasd", cast: "asdasd", language:"asdasd", category_ids: c.id)				
+			user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password",admin: true)	
+			sign_in user
 		end
 
 		context "with valid attributes" do
@@ -143,6 +156,8 @@ describe MoviesController do
 		before do
 			c = Category.create(desc: "Horror")
 			@movie = Movie.create(title:"Dhoom2", description:"asdasd", cast: "asdasd", language:"asdasd", category_ids: c.id)
+			user = User.create(name:"Abhishek",username:"example",email:"abc@xyz.com",password:"password",admin: true)	
+			sign_in user
 		end
 
 		it "destroys a movie object" do

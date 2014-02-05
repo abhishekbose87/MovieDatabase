@@ -6,5 +6,4 @@
       - if current_user.try(:admin?)
         = link_to "Edit", edit_movie_path(movie)
         = link_to "Delete", movie, data: { :confirm => 'Are you sure?'}, :method => :delete
-        %h2
-          = link_to "Create a new movie", new_movie_path
+  %h2= link_to "Create a new movie", new_movie_path if current_user.try(:admin?)

@@ -8,15 +8,23 @@ Cast: #{@movie.cast}
 %br/ 
 Language: #{@movie.language}
 %br/
-- if Vote.where(movie_id: @movie, user_id: current_user).count > 0
+%br/
+- if @usernames.count > 0
+  = @usernames.join(", ") 
+  - if @usernames.count == 1
+    = " has liked this movie"  
+  - else 
+    = " have liked this movie"  
+%br/ 
+- if @current_user && @votes_from_current_user.empty?
   = link_to "upvote", upvote_path(@movie), :method => :patch
   = link_to "downvote", downvote_path(@movie), :method => :patch
 %br/
 %br/
-- unless @movie.comments.empty?
+- unless @comments.empty?
   %strong Comments:
   %br/
-  - @movie.comments.each do |comment|
+  - @comments.each do |comment|
     %strong= comment.user.name
     wrote: 
     = comment.desc
